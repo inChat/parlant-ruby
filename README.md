@@ -1,4 +1,7 @@
 # Parlant Ruby Client
+
+[![CI](https://github.com/inchat/parlant-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/inchat/parlant-ruby/actions/workflows/ci.yml)
+
 :warning: **WIP: This is a work in progress.**
 
 A Ruby client library for interacting with the [Parlant API](https://www.parlant.io/docs).

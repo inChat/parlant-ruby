@@ -3,6 +3,15 @@
 require "simplecov"
 SimpleCov.start do
   add_filter "/spec/"
+  # Only run coverage in CI or when explicitly requested
+  minimum_coverage 80
+  enable_coverage :branch
+  # Don't run coverage unless requested
+  if ENV["CI"] || ENV["COVERAGE"]
+    formatter SimpleCov::Formatter::HTMLFormatter
+  else
+    formatter SimpleCov::Formatter::SimpleFormatter
+  end
 end
 
 require "parlant"
