@@ -30,27 +30,19 @@ module Parlant
 
     # Access the agents resource
     # @return [Parlant::Resources::Agent]
-    def agents
-      @agents
-    end
+    attr_reader :agents
 
     # Access the customers resource
     # @return [Parlant::Resources::Customer]
-    def customers
-      @customers
-    end
+    attr_reader :customers
 
     # Access the sessions resource
     # @return [Parlant::Resources::Session]
-    def sessions
-      @sessions
-    end
+    attr_reader :sessions
 
     # Access the guidelines resource
     # @return [Parlant::Resources::Guideline]
-    def guidelines
-      @guidelines
-    end
+    attr_reader :guidelines
 
     # Make a request to the Parlant API
     # @param method [Symbol] the HTTP method (:get, :post, :put, :delete)
@@ -98,15 +90,13 @@ module Parlant
         yield
       rescue HTTP::Error, Timeout::Error => e
         retries += 1
-        if retries <= @config.max_retries
-          # Exponential backoff with jitter
-          sleep_time = (2**retries) + rand(0.1..0.5)
-          @config.logger&.warn("Parlant API request failed: #{e.message}. Retrying in #{sleep_time} seconds...")
-          sleep(sleep_time)
-          retry
-        else
-          raise Error, "Request failed after #{retries} retries: #{e.message}"
-        end
+        raise Error, "Request failed after #{retries} retries: #{e.message}" unless retries <= @config.max_retries
+
+        # Exponential backoff with jitter
+        sleep_time = (2**retries) + rand(0.1..0.5)
+        @config.logger&.warn("Parlant API request failed: #{e.message}. Retrying in #{sleep_time} seconds...")
+        sleep(sleep_time)
+        retry
       end
     end
 

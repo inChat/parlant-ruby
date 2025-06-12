@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe Parlant::Client do
   describe "#initialize" do
     it "creates a client with default configuration" do
@@ -48,3 +49,4 @@ RSpec.describe Parlant::Client do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

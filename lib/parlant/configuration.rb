@@ -28,7 +28,7 @@ module Parlant
       @base_url = "https://api.parlant.io"
       @timeout = 30
       @max_retries = 3
-      @api_key = ENV["PARLANT_API_KEY"]
+      @api_key = ENV.fetch("PARLANT_API_KEY", nil)
       @logger = nil
     end
   end
